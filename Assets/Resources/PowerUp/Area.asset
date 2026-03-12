@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fb684b29ea27a3489a5abf19b627f67, type: 3}
+  m_Name: Area
+  m_EditorClassIdentifier: 
+  displayName: Area
+  description: Augments area of attack by 5% per level
+  icon: {fileID: -1225391115, guid: 2b26f481b606e9344951a5bd665a3589, type: 3}
+  maxLevel: 2
+  costPerLevel: 300
+  type: 5
+  valuePerLevel: 5

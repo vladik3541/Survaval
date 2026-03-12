@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4afb3f5650dea4081a9052fe7dce0a, type: 3}
+  m_Name: Archero
+  m_EditorClassIdentifier: 
+  heroId: archero
+  displayName: Archero
+  description: bow in hand
+  icon: {fileID: -836589964, guid: ad7387796f8335d4ab473bf6e99a817e, type: 3}
+  fullArtwork: {fileID: -836589964, guid: ad7387796f8335d4ab473bf6e99a817e, type: 3}
+  isDefaultUnlocked: 0
+  price: 500
+  baseHealth: 125
+  baseSpeed: 5
+  baseDamageMultiplier: 1
+  characterPrefab: {fileID: 8881008723225682001, guid: d924eddc23a174244be40413d28c2c34,
+    type: 3}

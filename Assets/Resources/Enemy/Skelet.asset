@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bafc88607c1dedb4ebe2d7282769e300, type: 3}
+  m_Name: Skelet
+  m_EditorClassIdentifier: 
+  enemyName: Skelet
+  prefab: {fileID: 503334049600044324, guid: 9796c785baaecd64fbb4a566b873afc4, type: 3}
+  spawnWeight: 1
