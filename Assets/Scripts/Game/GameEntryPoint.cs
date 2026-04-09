@@ -4,11 +4,15 @@ public class GameEntryPoint : MonoBehaviour
     [SerializeField] private Transform        spawnPoint;
     [SerializeField] private CameraController cameraController;
     [SerializeField] private SpawnManager spawnManager;
+    [SerializeField] private GameObject hitEnemyPrefab;
+    [SerializeField] private GameObject dieEnemyPrefab;
 
     private void Start()
     {
         var hero = GameDataLoader.Instance?.SelectedHero;
-
+        var pool = ServiceLocator.Get<PoolService>();
+        pool.CreatePool(PoolName.hitEnemy, hitEnemyPrefab);
+        pool.CreatePool(PoolName.dieEnemy, dieEnemyPrefab);
         if (hero == null)
         {
             Debug.LogError("[GameEntryPoint] SelectedHero не знайдено. Перевір GameDataLoader та PlayerPrefs.");

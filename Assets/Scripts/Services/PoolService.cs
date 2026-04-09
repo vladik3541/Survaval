@@ -1,11 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum PoolName
+{
+    arrow,
+    sword,
+    mageOrb,
+    hitEnemy,
+    dieEnemy
+}
 public class PoolService
 {
-    private Dictionary<string, Queue<GameObject>> pools = new();
-    private Dictionary<string, GameObject> prefabs = new();
-    
+    private Dictionary<PoolName, Queue<GameObject>> pools = new();
+    private Dictionary<PoolName, GameObject> prefabs = new();
+
+    private Dictionary<string, Queue<GameObject>> stringPools   = new();
+    private Dictionary<string, GameObject>         stringPrefabs = new();
+
     private Transform poolParent;
     
     public PoolService()
@@ -15,7 +25,7 @@ public class PoolService
         Object.DontDestroyOnLoad(go);
     }
     
-    public void CreatePool(string poolName, GameObject prefab, int initialSize = 10)
+    public void CreatePool(PoolName poolName, GameObject prefab, int initialSize = 10)
     {
         if (pools.ContainsKey(poolName))
         {
@@ -41,7 +51,7 @@ public class PoolService
         Debug.Log($"Pool created: {poolName} ({initialSize} objects)");
     }
     
-    public GameObject Get(string poolName, Vector3 position, Quaternion rotation)
+    public GameObject Get(PoolName poolName, Vector3 position, Quaternion rotation)
     {
         if (!pools.TryGetValue(poolName, out var pool))
         {
@@ -69,7 +79,7 @@ public class PoolService
         return obj;
     }
     
-    public void Return(string poolName, GameObject obj)
+    public void Return(PoolName poolName, GameObject obj)
     {
         if (!pools.ContainsKey(poolName))
         {
@@ -94,6 +104,72 @@ public class PoolService
         {
             Object.Destroy(obj);
         }
+    }
+
+    // ── String-key методи (для динамічних пулів, наприклад ворогів) ──────────
+
+    public void CreatePool(string key, GameObject prefab, int initialSize = 10)
+    {
+        if (stringPools.ContainsKey(key))
+        {
+            Debug.LogWarning($"Pool already exists: {key}");
+            return;
+        }
+
+        stringPrefabs[key] = prefab;
+        stringPools[key]   = new Queue<GameObject>();
+
+        var container = new GameObject($"Pool_{key}");
+        container.transform.SetParent(poolParent);
+
+        for (int i = 0; i < initialSize; i++)
+        {
+            var obj = Object.Instantiate(prefab, container.transform);
+            obj.SetActive(false);
+            stringPools[key].Enqueue(obj);
+        }
+
+        Debug.Log($"Pool created: {key} ({initialSize} objects)");
+    }
+
+    public GameObject Get(string key, Vector3 position, Quaternion rotation)
+    {
+        if (!stringPools.TryGetValue(key, out var pool))
+        {
+            Debug.LogError($"Pool not found: {key}");
+            return null;
+        }
+
+        GameObject obj;
+
+        if (pool.Count > 0)
+        {
+            obj = pool.Dequeue();
+        }
+        else
+        {
+            obj = Object.Instantiate(stringPrefabs[key]);
+            Debug.Log($"Pool {key} expanded");
+        }
+
+        obj.transform.position = position;
+        obj.transform.rotation = rotation;
+        obj.SetActive(true);
+
+        return obj;
+    }
+
+    public void Return(string key, GameObject obj)
+    {
+        if (!stringPools.ContainsKey(key))
+        {
+            Debug.LogWarning($"Pool not found: {key}. Destroying object.");
+            Object.Destroy(obj);
+            return;
+        }
+
+        obj.SetActive(false);
+        stringPools[key].Enqueue(obj);
     }
 }
 

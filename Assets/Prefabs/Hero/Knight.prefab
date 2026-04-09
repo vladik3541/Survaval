@@ -1414,6 +1414,7 @@ GameObject:
   - component: {fileID: 3651230347874896319}
   - component: {fileID: -3327104851481225021}
   - component: {fileID: 3176981874886971976}
+  - component: {fileID: -1089736963950038526}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Player
@@ -1456,7 +1457,7 @@ Animator:
   m_GameObject: {fileID: 7588505334575102630}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b29b2128ad71ad649baeac918d2d5a2e, type: 2}
-  m_Controller: {fileID: 9100000, guid: e6b7b12455cbb804cbc5ee144ad193a2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 92e559bbeffeab94ea1d09014edb83ce, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1572,6 +1573,12 @@ MonoBehaviour:
   gemLayer:
     serializedVersion: 2
     m_Bits: 64
+  goldLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  healthLayer:
+    serializedVersion: 2
+    m_Bits: 128
   jumpPower: 2
   jumpDuration: 0.4
 --- !u!114 &-3327104851481225021
@@ -1587,7 +1594,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goldValue: 5
-  flyDuration: 0.3
 --- !u!114 &3176981874886971976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1600,6 +1606,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 297f900c04aae814788476dc98430115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1089736963950038526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7588505334575102630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9adc9378ea47f544b9e1bafb674d85c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: b6547b88f9a038246aca032f6e4d4b25, type: 2}
+  cooldownTimer: 0
+  currentLevel: 1
+  spawnOffset: {x: 0, y: 1, z: 0}
+  playerRigidbody: {fileID: 3308414039458879700}
+  slashCount: 1
+  damageMultiplier: 1
+  hasKnockback: 0
+  spin360: 0
+  doubleSize: 0
 --- !u!1 &7590152995417840180
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f34963c3e8f7b249a9bf224eebd3ac7, type: 3}
+  m_Name: ArcherAbilityData
+  m_EditorClassIdentifier: 
+  abilityName: 'Archer '
+  icon: {fileID: -113605525, guid: 249709b0b8531e043aaded92c48a8acd, type: 3}
+  baseDamage: 35
+  baseCooldown: 1.5
+  baseProjectileSpeed: 18
+  baseRange: 15
+  poolName: 0
+  projectilePrefab: {fileID: 6566857711552164081, guid: bb63e8424be7ee042b5cf10113160972,
+    type: 3}
+  levelUpgrades:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

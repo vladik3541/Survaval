@@ -270,6 +270,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startScene: MainMenu
+  arrowPrefab: {fileID: 6566857711552164081, guid: bb63e8424be7ee042b5cf10113160972,
+    type: 3}
+  swordPrefab: {fileID: 3847292900742494972, guid: 29a8ad24ebc94ad4fb8d04766ed66a26,
+    type: 3}
+  mageOrbPrefab: {fileID: 2852891094032724135, guid: 27090bb6e055f634d86ad50720a4cde8,
+    type: 3}
+  arrowPoolSize: 30
+  swordPoolSize: 20
+  mageOrbPoolSize: 20
 --- !u!4 &1934144969
 Transform:
   m_ObjectHideFlags: 0

@@ -43,10 +43,10 @@ public class SpawnManager : MonoBehaviour
     [Header("Pool & Limits")]
     [Tooltip("Кількість ворогів на екрані зараз (тільки для читання)")]
     [SerializeField] private int currentOnScreen;
+    [Tooltip("Початковий розмір пулу для кожного типу ворога")]
+    [SerializeField] private int enemyPoolInitialSize = 15;
 
     // ── Приватні поля ─────────────────────────────────────────────────────────
-
-    private readonly Dictionary<EnemyData, Queue<GameObject>> _pools = new();
     private Camera   _mainCamera;
     private bool     _hordeActive;
 
@@ -77,6 +77,7 @@ public class SpawnManager : MonoBehaviour
         // Сортуємо хвилі за часом старту
         waves.Sort((a, b) => a.startTime.CompareTo(b.startTime));
 
+        RegisterEnemyPools();
         UpdateWave();
         StartCoroutine(TimerCoroutine());
         StartCoroutine(SpawnLoop());
@@ -191,10 +192,10 @@ public class SpawnManager : MonoBehaviour
                 ? playerTransform.position + new Vector3(Mathf.Cos(angleRad), 0f, Mathf.Sin(angleRad)) * dist
                 : Vector3.zero;
 
-            if (NavMesh.SamplePosition(candidate, out NavMeshHit hit, 5f, NavMesh.AllAreas))
+            if (Physics.Raycast(candidate, Vector3.down, out RaycastHit hit, float.MaxValue, groundLayer))
             {
                 var go = GetFromPool(config.enemyType);
-                go.transform.position = hit.position;
+                go.transform.position = hit.point;
                 go.SetActive(true);
 
                 var health = go.GetComponent<EnemyHealth>();
@@ -214,7 +215,7 @@ public class SpawnManager : MonoBehaviour
 
     /// <summary>
     /// Повертає валідну позицію на NavMesh поза полем зору камери.
-    /// Повертає null якщо за 30 спроб не знайдено.
+    /// Повертає null якщо за 30 спроб не знайдено
     /// </summary>
     public Vector3? GetSpawnPosition()
     {
@@ -226,14 +227,13 @@ public class SpawnManager : MonoBehaviour
             float dist     = spawnRadius + Random.Range(-spawnRadiusVariance, spawnRadiusVariance);
 
             var candidate = playerTransform.position
-                + new Vector3(Mathf.Cos(angleRad), 0f, Mathf.Sin(angleRad)) * dist;
-            if (Physics.Raycast(candidate, Vector3.down, out RaycastHit hit, dist))
+                + new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)) * dist;
+            if (Physics.Raycast(candidate, Vector3.down, out RaycastHit hit, float.MaxValue, groundLayer))
             {
-                // Не спавнити всередині frustum камери
-                if (IsInsideCameraFrustum(hit.transform.position))
+                if (IsInsideCameraFrustum(hit.point))
                     continue;
 
-                return hit.transform.position;
+                return hit.point;
             }
         }
 
@@ -250,6 +250,34 @@ public class SpawnManager : MonoBehaviour
         return GeometryUtility.TestPlanesAABB(planes, bounds);
     }
 
+    // ── Реєстрація пулів ──────────────────────────────────────────────────────
+
+    private void RegisterEnemyPools()
+    {
+        var pool = ServiceLocator.Get<PoolService>();
+        if (pool == null) return;
+
+        var seen = new HashSet<string>();
+
+        foreach (var wave in waves)
+        {
+            if (wave.enemyPool == null) continue;
+            foreach (var data in wave.enemyPool)
+                TryRegister(pool, data, seen);
+        }
+
+        foreach (var horde in hordeEvents)
+            TryRegister(pool, horde.enemyType, seen);
+    }
+
+    private void TryRegister(PoolService pool, EnemyData data, HashSet<string> seen)
+    {
+        if (data == null || data.prefab == null) return;
+        if (!seen.Add(data.name)) return;
+
+        pool.CreatePool(data.name, data.prefab, enemyPoolInitialSize);
+    }
+
     // ── Пул об'єктів ──────────────────────────────────────────────────────────
 
     private GameObject GetFromPool(EnemyData data)
@@ -260,23 +288,22 @@ public class SpawnManager : MonoBehaviour
             return null;
         }
 
-        if (!_pools.ContainsKey(data))
-            _pools[data] = new Queue<GameObject>();
+        var pool = ServiceLocator.Get<PoolService>();
+        if (pool == null) return null;
 
-        var pool = _pools[data];
+        var go = pool.Get(data.name, Vector3.zero, Quaternion.identity);
+        if (go == null) return null;
 
-        if (pool.Count > 0)
+        go.SetActive(false); // SpawnSingleEnemy сам зробить SetActive(true) після позиціонування
+
+        var health = go.GetComponent<EnemyHealth>();
+        if (health != null)
         {
-            var pooled = pool.Dequeue();
-            pooled.GetComponent<EnemyHealth>()?.ResetForPool();
-            return pooled;
+            health.SourceData = data;
+            health.ResetForPool();
         }
 
-        // Новий об'єкт — зберігаємо посилання на EnemyData
-        var fresh = Instantiate(data.prefab);
-        var health = fresh.GetComponent<EnemyHealth>();
-        if (health != null) health.SourceData = data;
-        return fresh;
+        return go;
     }
 
     /// <summary>
@@ -284,12 +311,7 @@ public class SpawnManager : MonoBehaviour
     /// </summary>
     public void ReturnToPool(GameObject go, EnemyData data)
     {
-        go.SetActive(false);
-
-        if (!_pools.ContainsKey(data))
-            _pools[data] = new Queue<GameObject>();
-
-        _pools[data].Enqueue(go);
+        ServiceLocator.Get<PoolService>()?.Return(data.name, go);
     }
 
     /// <summary>

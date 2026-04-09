@@ -1561,6 +1561,7 @@ GameObject:
   - component: {fileID: -2842965085603802929}
   - component: {fileID: -2998020738968174852}
   - component: {fileID: -8749201804302378275}
+  - component: {fileID: -5519822904889159164}
   m_Layer: 0
   m_Name: Ranger
   m_TagString: Player
@@ -1718,6 +1719,12 @@ MonoBehaviour:
   gemLayer:
     serializedVersion: 2
     m_Bits: 64
+  goldLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  healthLayer:
+    serializedVersion: 2
+    m_Bits: 128
   jumpPower: 2
   jumpDuration: 0.4
 --- !u!114 &-2998020738968174852
@@ -1733,7 +1740,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goldValue: 5
-  flyDuration: 0.3
 --- !u!114 &-8749201804302378275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1746,6 +1752,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 297f900c04aae814788476dc98430115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5519822904889159164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8881008723225682001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20e2ffa2ffb0989429100b3fa32b0eaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: d66fdb0070a093f4ea76be8adeeb727c, type: 2}
+  cooldownTimer: 0
+  currentLevel: 1
+  spawnOffset: {x: 0, y: 1, z: 0}
+  detectionRadius: 15
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  arrowCount: 1
+  spreadAngle: 15
+  damageMultiplier: 1
+  canPierce: 0
 --- !u!1 &9058724246515770692
 GameObject:
   m_ObjectHideFlags: 0

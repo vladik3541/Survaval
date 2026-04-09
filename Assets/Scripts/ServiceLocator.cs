@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public static class ServiceLocator
 {
     private static readonly Dictionary<Type, object> services = new();

@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
@@ -42,6 +43,13 @@ public class EnemyHealth : Health
             _instanceMaterial = dissolveRenderer.material;
     }
 
+    public override void TakeDamage(float amount)
+    {
+        base.TakeDamage(amount);
+        var hitEffect = ServiceLocator.Get<PoolService>().Get(PoolName.hitEnemy, transform.position+Vector3.up, Quaternion.identity);
+        hitEffect.GetComponent<Poolable>().ReturnToPool(1);
+    }
+    
     // ── Публічний API ─────────────────────────────────────────────────────────
 
     /// <summary>
@@ -97,11 +105,15 @@ public class EnemyHealth : Health
 
         OnDeath?.Invoke();
 
+        var dieEffect = ServiceLocator.Get<PoolService>()
+            .Get(PoolName.dieEnemy, transform.position + Vector3.up, Quaternion.identity).GetComponent<ParticleSystem>();
+        dieEffect.Emit(1);
+        dieEffect.GetComponent<Poolable>().ReturnToPool(0.2f); 
         // Повідомляємо SpawnManager про смерть — зменшує лічильник
         SpawnManager.Instance?.OnEnemyDied();
 
         // 1. Дроп лута
-        LootDropper.Drop(transform.position);
+        LootDropper.Drop(transform.position + Vector3.up);
 
         // 2. Рахунок килів
         ScoreManager.Instance?.AddKill();
@@ -116,19 +128,12 @@ public class EnemyHealth : Health
     {
         // Вимикаємо колайдер, щоб мертвий ворог не блокував
         var col = GetComponent<Collider>();
+        var rb = GetComponent<Rigidbody>();
         if (col != null) col.enabled = false;
+        if (rb != null) rb.isKinematic = true;
 
-        if (_instanceMaterial != null)
-        {
-            _instanceMaterial.DOKill();
-            _instanceMaterial.SetFloat(DissolveProperty, 0f);
-            _instanceMaterial.DOFloat(1f, DissolveProperty, dissolveDuration)
-                             .OnComplete(ReturnOrDestroy);
-        }
-        else
-        {
-            Invoke(nameof(ReturnOrDestroy), dissolveDuration);
-        }
+        
+        ReturnOrDestroy();
     }
 
     private void ReturnOrDestroy()

@@ -13,7 +13,7 @@ public class PlayerStats : MonoBehaviour
     private HeroData       _hero;
     private PlayerHealth   _health;
     private PlayerMovement _movement;
-    private GemCollector   _collector;
+    private ItemCollector   _collector;
 
     // ── Ініціалізація ─────────────────────────────────────────────────────────
 
@@ -26,7 +26,7 @@ public class PlayerStats : MonoBehaviour
         _hero      = hero;
         _health    = GetComponent<PlayerHealth>();
         _movement  = GetComponent<PlayerMovement>();
-        _collector = GetComponent<GemCollector>();
+        _collector = GetComponent<ItemCollector>();
 
         if (PowerUpManager.Instance != null)
             PowerUpManager.Instance.OnPowerUpPurchased += OnPowerUpPurchased;
