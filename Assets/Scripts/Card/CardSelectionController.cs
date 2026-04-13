@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class CardSelectionController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject cardSelectionPanel;
-    [SerializeField] private List<GameObject> cards;
+    [SerializeField] private List<SkillCardUI> cards;
 
     [Header("Animation Settings")]
     [SerializeField] private float cardAppearDelay = 0.2f;
@@ -16,10 +17,19 @@ public class CardSelectionController : MonoBehaviour
     [SerializeField] private Ease cardEase = Ease.OutBack;
 
     private float _previousTimeScale;
+    public event Action<int> OnCardChosen;
 
     private void Start()
     {
         LevelSystem.Instance.OnLevelUp += ShowCardSelection;
+        for (int i = 0; i < cards.Count; i++)
+        {
+            int index = i;
+            if (cards[index].TryGetComponent(out Button cardButton))
+            {
+                cardButton.onClick.AddListener(()=>OnCardSelected(index));
+            }
+        }
     }
 
     public void ShowCardSelection()
@@ -30,9 +40,17 @@ public class CardSelectionController : MonoBehaviour
 
         // Вмикаємо панель
         cardSelectionPanel.SetActive(true);
-
+        
         // Запускаємо анімацію карточок по черзі
         AnimateCardsSequentially();
+        // Отримай карточки від SkillManager і передай їх в UI
+        var skills = SkillManager.Instance.GetRandomCards(cards.Count);
+        // Тут заповнюй UI карточок даними зі skills (іконки, назви, описи)
+        for (int i = 0; i < cards.Count; i++)
+        {
+            if (i < skills.Count)
+                cards[i].Setup(skills[i]);
+        }
     }
 
     public void HideCardSelection()
@@ -45,13 +63,10 @@ public class CardSelectionController : MonoBehaviour
     {
         for (int i = 0; i < cards.Count; i++)
         {
-            GameObject card = cards[i];
-
-            // Ховаємо карточку перед анімацією
+            GameObject card = cards[i].gameObject;
             card.transform.localScale = Vector3.zero;
             card.SetActive(true);
-
-            // Анімація появи з затримкою (використовуємо unscaledTime бо timeScale = 0)
+            
             card.transform
                 .DOScale(Vector3.one, cardAnimDuration)
                 .SetDelay(i * cardAppearDelay)
@@ -59,12 +74,11 @@ public class CardSelectionController : MonoBehaviour
                 .SetUpdate(true); // SetUpdate(true) = ignoreTimeScale
         }
     }
-
-    // Викликається при натисканні на карточку
+    
     public void OnCardSelected(int cardIndex)
     {
         HideCardSelection();
-        // Тут обробляєш логіку вибору карточки
+        OnCardChosen?.Invoke(cardIndex);
         Debug.Log($"Вибрано карточку: {cardIndex}");
     }
 

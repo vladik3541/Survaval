@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 public class GameEntryPoint : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class GameEntryPoint : MonoBehaviour
     [SerializeField] private SpawnManager spawnManager;
     [SerializeField] private GameObject hitEnemyPrefab;
     [SerializeField] private GameObject dieEnemyPrefab;
+    [SerializeField] private SkillManager skillManager;
 
     private void Start()
     {
@@ -33,6 +35,7 @@ public class GameEntryPoint : MonoBehaviour
 
         cameraController?.Initialize(player.transform);
         spawnManager?.Initialize(player.transform);
+        skillManager?.Init(player.GetComponent<PlayerStats>()); 
 
         // Передаємо PlayerHealth до HUD — підписка на події відбувається всередині
         var playerHealth = player.GetComponent<PlayerHealth>();

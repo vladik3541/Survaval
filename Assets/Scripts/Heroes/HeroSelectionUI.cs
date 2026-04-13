@@ -38,6 +38,7 @@ public class HeroSelectionUI : MonoBehaviour
         startButton?.onClick.AddListener(OnStartClicked);
         backButton?.onClick.AddListener(OnBackClicked);
         startButton.gameObject.SetActive(false);
+        gameObject.SetActive(false);
         
     }
 
@@ -93,8 +94,7 @@ public class HeroSelectionUI : MonoBehaviour
 
         bool unlocked = selectedSlot != null && selectedSlot.IsUnlocked();
         int  cost     = data.price;
-
-        ServiceLocator.TryGet<SaveService>(out var save);
+        
         bool canAfford = MoneyMenuManager.Instance.Coins >= cost;
 
         if (infoIcon)        infoIcon.sprite      = data.icon;

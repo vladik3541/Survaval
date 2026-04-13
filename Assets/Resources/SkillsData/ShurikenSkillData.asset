@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41cda50c7f572b7468edbba0f4e3b777, type: 3}
+  m_Name: ShurikenSkillData
+  m_EditorClassIdentifier: 
+  skillName: Shuriken
+  icon: {fileID: 1311020431, guid: 917b62a0c0e7bdc4a8669116f5c98233, type: 3}
+  description: bla bla bla
+  weight: 10
+  maxLevel: 5
+  levelDescriptions: []
+  skillScript: {fileID: 11500000, guid: 47c3238ca94f05f469c9548e9fcda397, type: 3}
+  shurikenPrefab: {fileID: 8989584981291306699, guid: 4aefe1f1af4ecf34c9036d3dcdd7ef97,
+    type: 3}
+  orbitRadius: 2
+  levelConfigs:
+  - shurikenCount: 1
+    orbitSpeed: 90
+  - shurikenCount: 2
+    orbitSpeed: 90
+  - shurikenCount: 2
+    orbitSpeed: 150
+  - shurikenCount: 3
+    orbitSpeed: 150
+  - shurikenCount: 4
+    orbitSpeed: 210

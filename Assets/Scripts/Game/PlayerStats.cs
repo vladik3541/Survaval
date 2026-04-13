@@ -65,4 +65,12 @@ public class PlayerStats : MonoBehaviour
         // ── Множник пошкодження: base × MightMultiplier ───────────────────────
         DamageMultiplier = _hero.baseDamageMultiplier * (pm?.MightMultiplier ?? 1f);
     }
+
+    public void ApplyPassive(PassiveSkillData data)
+    {
+        switch (data.skillName)
+        {
+            
+        }
+    }
 }

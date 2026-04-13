@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Amount
   description: Fires 1 more projectile
-  icon: {fileID: -517747139, guid: 2b26f481b606e9344951a5bd665a3589, type: 3}
+  icon: {fileID: 1709629808, guid: 66e03f15820a7784c9c1cf9739494daa, type: 3}
   maxLevel: 1
   costPerLevel: 5000
   type: 3
