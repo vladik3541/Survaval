@@ -114,6 +114,7 @@ public class MageAbility : BaseAbility
         orb.SetAOE(hasAOE, aoeRadius);
         orb.SetChain(hasChain);
         orb.Init(Data.baseDamage, Data.baseProjectileSpeed, Data.baseRange, Vector3.zero);
+        AudioManager.Instance.PlayMageProjectile();
         Debug.Log($"[MageAbility] Орб спавнено з {spawnPos} → ціль: {target.name}", this);
     }
 }

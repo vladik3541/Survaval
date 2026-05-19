@@ -82,6 +82,7 @@ public class SkillManager : MonoBehaviour
         {
             // Створюємо дочірній об'єкт і додаємо компонент
             var skillObject = new GameObject(data.skillName);
+            skillObject.transform.localPosition = Vector3.zero;
             skillObject.transform.SetParent(player.transform);
 
             // Тут потрібен mapping: дані → тип компонента
@@ -109,8 +110,9 @@ public class SkillManager : MonoBehaviour
         // Маппінг через Dictionary — реєструй свої скіли тут
         var map = new Dictionary<string, Func<BaseActiveSkill>>
         {
-            { "Shuriken",  () => obj.AddComponent<ShurikenSkill>() }
-            // Додавай нові скіли сюди
+            { "Shuriken",  () => obj.AddComponent<ShurikenSkill>() },
+            { "Shield",  () => obj.AddComponent<ShieldSkill>() }
+            
         };
 
         if (map.TryGetValue(data.skillName, out var factory))

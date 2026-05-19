@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -34,7 +33,7 @@ public class CardSelectionController : MonoBehaviour
 
     public void ShowCardSelection()
     {
-        // Зберігаємо поточний timeScale та зупиняємо гру
+        // Зберігаємо поточний timeScale та зупиняємо гру!
         _previousTimeScale = Time.timeScale;
         Time.timeScale = 0f;
 

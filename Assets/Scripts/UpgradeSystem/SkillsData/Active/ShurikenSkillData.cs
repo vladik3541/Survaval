@@ -16,4 +16,5 @@ public class ShurikenLevelConfig
 {
     public int shurikenCount;
     public float orbitSpeed;
+    public float damage;
 }

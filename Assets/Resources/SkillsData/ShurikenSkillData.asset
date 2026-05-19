@@ -13,23 +13,28 @@ MonoBehaviour:
   m_Name: ShurikenSkillData
   m_EditorClassIdentifier: 
   skillName: Shuriken
-  icon: {fileID: 1311020431, guid: 917b62a0c0e7bdc4a8669116f5c98233, type: 3}
-  description: bla bla bla
-  weight: 10
+  icon: {fileID: -125615527, guid: 3bf0c841754e70c47a852012ed44cd25, type: 3}
+  description: Shuriken
+  weight: 100
   maxLevel: 5
   levelDescriptions: []
-  skillScript: {fileID: 11500000, guid: 47c3238ca94f05f469c9548e9fcda397, type: 3}
+  skillScript: {fileID: 11500000, guid: df4d63aac9f6a624ebbfd42b499f36b7, type: 3}
   shurikenPrefab: {fileID: 8989584981291306699, guid: 4aefe1f1af4ecf34c9036d3dcdd7ef97,
     type: 3}
   orbitRadius: 2
   levelConfigs:
   - shurikenCount: 1
     orbitSpeed: 90
+    damage: 10
   - shurikenCount: 2
     orbitSpeed: 90
+    damage: 10
   - shurikenCount: 2
     orbitSpeed: 150
+    damage: 15
   - shurikenCount: 3
     orbitSpeed: 150
+    damage: 15
   - shurikenCount: 4
     orbitSpeed: 210
+    damage: 20

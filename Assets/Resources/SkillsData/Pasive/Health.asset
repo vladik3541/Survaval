@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Health
   m_EditorClassIdentifier: 
   skillName: Health
-  icon: {fileID: 1597712906, guid: 66e03f15820a7784c9c1cf9739494daa, type: 3}
+  icon: {fileID: -1786567694, guid: 3bf0c841754e70c47a852012ed44cd25, type: 3}
   description: Health
   weight: 10
   skillName: 

@@ -13,6 +13,10 @@ public class PlayerHealth : Health
 
     [Header("Аніматор гравця (для анімації смерті)")]
     [SerializeField] private Animator playerAnimator;
+    [Header("Захист від спаму (сек)")]
+    [Tooltip("Мінімальний інтервал між звуками урону, щоб не спамити")]
+    public float hitSoundCooldown = 0.3f;
+    private float _lastHitTime = -999f;
 
     // Константи
     private const float VignetteMaxAlpha    = 0.55f;
@@ -43,8 +47,16 @@ public class PlayerHealth : Health
     /// </summary>
     public override void TakeDamage(float amount)
     {
-        float armor   = PowerUpManager.Instance?.ArmorBonus ?? 0f;
-        float reduced = amount * Mathf.Max(0f, 1f - armor);
+        var shield = GetComponentInChildren<ShieldSkill>();
+        if (shield != null)
+            amount = shield.AbsorbDamage(amount);
+        var stats = GetComponent<PlayerStats>();
+        float reduced = Mathf.Max(1f, amount - stats.Armor);
+        if (Time.time - _lastHitTime >= hitSoundCooldown)
+        {
+            AudioManager.Instance.PlayPlayerHit(transform.position);
+            _lastHitTime = Time.time;
+        }
         base.TakeDamage(reduced);
     }
 

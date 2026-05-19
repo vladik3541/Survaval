@@ -42,6 +42,7 @@ public class ItemCollector : MonoBehaviour
             gemTr.DOLocalJump(Vector3.zero, jumpPower, 1, jumpDuration)
                  .OnComplete(() =>
                  {
+                     AudioManager.Instance.PlayPickupXP();
                      float growth = PowerUpManager.Instance?.GrowthMultiplier ?? 1f;
                      LevelSystem.Instance?.AddXP(xpValue * growth);
                      Destroy(gemTr.gameObject);
@@ -65,6 +66,7 @@ public class ItemCollector : MonoBehaviour
             goldTr.DOLocalJump(Vector3.zero, jumpPower, 1, jumpDuration)
                   .OnComplete(() =>
                   {
+                      AudioManager.Instance.PlayPickupGold();
                       GoldSystem.Instance?.AddGold(value);
                       Destroy(goldTr.gameObject);
                   });
@@ -88,6 +90,7 @@ public class ItemCollector : MonoBehaviour
             pickupTr.DOLocalJump(Vector3.zero, jumpPower, 1, jumpDuration)
                     .OnComplete(() =>
                     {
+                        AudioManager.Instance.PlayPickupHealth();
                         ph?.Heal(amount);
                         Destroy(pickupTr.gameObject);
                     });

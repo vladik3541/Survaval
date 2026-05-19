@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41cda50c7f572b7468edbba0f4e3b777, type: 3}
+  m_Name: MisilleSkill
+  m_EditorClassIdentifier: 
+  skillName: Missile
+  icon: {fileID: 1475319559, guid: 3bf0c841754e70c47a852012ed44cd25, type: 3}
+  description: MisilleSkill
+  weight: 15
+  maxLevel: 5
+  levelDescriptions: []
+  skillScript: {fileID: 11500000, guid: df4d63aac9f6a624ebbfd42b499f36b7, type: 3}
+  shurikenPrefab: {fileID: 8989584981291306699, guid: 4aefe1f1af4ecf34c9036d3dcdd7ef97,
+    type: 3}
+  orbitRadius: 2
+  levelConfigs:
+  - shurikenCount: 1
+    orbitSpeed: 90
+    damage: 0
+  - shurikenCount: 2
+    orbitSpeed: 90
+    damage: 0
+  - shurikenCount: 2
+    orbitSpeed: 150
+    damage: 0
+  - shurikenCount: 3
+    orbitSpeed: 150
+    damage: 0
+  - shurikenCount: 4
+    orbitSpeed: 210
+    damage: 0

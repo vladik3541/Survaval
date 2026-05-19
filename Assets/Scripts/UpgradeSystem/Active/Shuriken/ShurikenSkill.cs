@@ -60,6 +60,7 @@ public class ShurikenSkill : BaseActiveSkill
         {
             if (shuriken == null) continue;
             var orbit = shuriken.GetComponent<ShurikenOrbitController>();
+            orbit.Init(_shurikenData.levelConfigs[0].damage);
             if (orbit != null)
                 orbit.orbitSpeed = speed;
         }

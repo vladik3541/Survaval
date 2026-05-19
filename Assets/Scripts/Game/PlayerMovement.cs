@@ -1,11 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Переміщення гравця за допомогою InputService.
-/// Гравець рухається по площині XZ і повертається в напрямку руху.
-///
-/// Прикріпи до кореневого GameObject персонажа.
-/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {

@@ -8,6 +8,7 @@ public class ShurikenOrbitController : MonoBehaviour
 
     private float _currentAngle;
     private Transform _playerTransform;
+    private float _damage;
 
     private void Awake()
     {
@@ -17,7 +18,10 @@ public class ShurikenOrbitController : MonoBehaviour
         if (_playerTransform == null)
             Debug.LogWarning("ShurikenOrbitController: не знайдено transform гравця!");
     }
-
+    public void Init(float damage)
+    {
+        _damage = damage;
+    }
     private void Update()
     {
         if (_playerTransform == null) return;
@@ -36,5 +40,12 @@ public class ShurikenOrbitController : MonoBehaviour
 
         // Обертаємо сам сюрікен навколо своєї осі для краси
         transform.Rotate(Vector3.up, orbitSpeed * 2f * Time.deltaTime, Space.World);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.TryGetComponent(out EnemyHealth enemyHealth))
+        {
+            enemyHealth.TakeDamage(_damage);
+        }
     }
 }

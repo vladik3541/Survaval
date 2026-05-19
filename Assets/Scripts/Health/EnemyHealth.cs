@@ -120,6 +120,7 @@ public class EnemyHealth : Health
 
         // 3. Dissolve + повернення в пул
         PlayDissolveAndReturn();
+        AudioManager.Instance.PlayEnemyKill();
     }
 
     // ── Приватне ──────────────────────────────────────────────────────────────

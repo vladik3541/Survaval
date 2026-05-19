@@ -100,6 +100,7 @@ public class WarriorAbility : BaseAbility
             float   angle = (360f / count) * i;
             Vector3 dir   = Quaternion.Euler(0f, angle, 0f) * Vector3.forward;
             SpawnSlash(dir);
+            AudioManager.Instance.PlaySwordSwing();
         }
     }
 

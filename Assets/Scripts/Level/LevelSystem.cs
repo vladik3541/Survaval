@@ -56,6 +56,7 @@ public class LevelSystem : MonoBehaviour
             xpToNextLevel = CalcXPRequired(currentLevel);
 
             OnLevelUp?.Invoke();
+            AudioManager.Instance.PlayLevelUp();
             PowerUpSelectionUI.Instance?.Show();
         }
         OnChangeExp?.Invoke((int)currentXP, (int)xpToNextLevel);

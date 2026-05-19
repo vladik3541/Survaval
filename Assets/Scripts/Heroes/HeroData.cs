@@ -25,6 +25,7 @@ public class HeroData : ScriptableObject
     public float baseSpeed            = 5f;
     public float baseDamageMultiplier = 1f;
     public float basePickupRadius     = 3f;
+    public float baseArmor            = 1f;
 
     [Header("Префаб персонажа (для ігрової сцени)")]
     public GameObject characterPrefab;

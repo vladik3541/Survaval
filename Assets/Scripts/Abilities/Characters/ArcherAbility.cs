@@ -122,6 +122,7 @@ public class ArcherAbility : BaseAbility
             Data.baseRange,
             direction
         );
+        AudioManager.Instance.PlayArrowShoot();
         Debug.Log($"[ArcherAbility] Стріла випущена з {spawnPos} → {direction}, dmg={Data.baseDamage * damageMultiplier}", this);
     }
 
